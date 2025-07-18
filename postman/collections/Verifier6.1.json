@@ -10,7 +10,7 @@
 			"name": "happyPath",
 			"item": [
 				{
-					"name": "create task1",
+					"name": "create task",
 					"event": [
 						{
 							"listen": "test",
