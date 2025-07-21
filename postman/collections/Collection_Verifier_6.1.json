@@ -635,47 +635,47 @@
 	],
 	"variable": [
 		{
-			"id": "9a6a0275-7e94-4d56-b518-6b0dc4626bfc",
+			"id": "bb658fb8-c530-4c4e-9c17-cd41bca19ddf",
 			"key": "titel",
 			"value": ""
 		},
 		{
-			"id": "ab3157f3-22b2-403d-910a-454a98d5f299",
+			"id": "84bc97d7-3601-4d39-9b97-39fb2a2d0b2e",
 			"key": "text",
 			"value": ""
 		},
 		{
-			"id": "f09dfc9c-1ade-4180-b0c0-a3c035ff7393",
+			"id": "4a0f2b9b-b16f-4c0e-8c6e-85465bd23fd4",
 			"key": "answer",
 			"value": ""
 		},
 		{
-			"id": "925e1320-b4e1-4c9a-a069-792fbf7c9fd6",
+			"id": "6602a33f-130b-4d2a-b62c-ed474bdb0094",
 			"key": "title",
 			"value": ""
 		},
 		{
-			"id": "3c34fb56-5cb4-485b-83ea-7639f1aceb10",
+			"id": "114773ed-3f68-4bda-904d-2bf1c9e65379",
 			"key": "sadPathText500",
 			"value": ""
 		},
 		{
-			"id": "9b2e816b-004f-4b87-926e-cc3cdba5a7c5",
+			"id": "7c73c63b-c233-4c13-b2c5-ac5024ebb5ea",
 			"key": "sadPathAnswer500",
 			"value": ""
 		},
 		{
-			"id": "40c210d8-41f8-44ba-b2e9-d8751bace499",
+			"id": "4a81c68e-a22e-44e8-b5be-99f8e234e90c",
 			"key": "sadPathText400",
 			"value": ""
 		},
 		{
-			"id": "c4ebba3a-40e2-49e8-9d13-dd1430a03a18",
+			"id": "ef72b550-c1d5-4391-96b8-8bf3048068a0",
 			"key": "sadPathAnswer400",
 			"value": ""
 		},
 		{
-			"id": "8786fa14-5ff7-42c8-aaa8-7d654bfa508e",
+			"id": "59e39b59-1d0d-452d-81f4-c9297b6de04c",
 			"key": "sadPathTitle400",
 			"value": ""
 		}
