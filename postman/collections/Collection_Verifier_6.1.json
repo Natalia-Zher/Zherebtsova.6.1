@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b1900623-24e2-4fb6-b5cf-52a33b3e04c3",
-		"name": "Verifier6.1",
+		"name": "Collection_Verifier_6.1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "37429709-b1900623-24e2-4fb6-b5cf-52a33b3e04c3"
 	},
@@ -9,6 +9,132 @@
 		{
 			"name": "happyPath",
 			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "923dc89e-e7e2-4046-8d56-ef3986205464",
+								"exec": [
+									"let token = pm.response.headers.get(\"Authorization\");",
+									"",
+									"if (token) {",
+									"    pm.environment.set(\"authToken\", token.replace(\"Bearer \", \"\"));",
+									"}",
+									"",
+									"pm.collectionVariables.set(\"text\", pm.response.text());",
+									"pm.collectionVariables.set(\"answer\", pm.response.answer);",
+									"pm.collectionVariables.set(\"title\", pm.response.title);",
+									"",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"    pm.expect(pm.response.status).to.eql(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Response contains a valid id_token\", function () {",
+									"    let response = pm.response.json();",
+									"    pm.expect(response).to.have.property(\"id_token\");",
+									"    pm.expect(response.id_token).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "d24288c2-e2c0-48bc-8ad5-04487fc90462",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/login"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"admin\",\"password\":\"admin\",\"rememberMe\":false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "create task",
 					"event": [
@@ -73,9 +199,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrlVerifier}}asks",
+							"raw": "{{baseUrlVerifier}}tasks",
 							"host": [
-								"{{baseUrlVerifier}}asks"
+								"{{baseUrlVerifier}}tasks"
 							]
 						}
 					},
@@ -119,10 +245,8 @@
 							"script": {
 								"id": "1b9eae57-c8ad-4286-a7f3-2872642f8fc8",
 								"exec": [
-									"const response = pm.response.json();",
-									"pm.collectionVariables.set(\"sadPathText500\", response.text);",
-									"pm.collectionVariables.set(\"answer\", response.answer);",
-									"pm.collectionVariables.set(\"title\", response.title);",
+									"const response = pm.response.text(); // Changed to text() for XML response",
+									"pm.collectionVariables.set(\"sadPathText500\", response);",
 									"",
 									"pm.test(\"Status code is 500 Internal Server Error\", function () {",
 									"    pm.expect(pm.response.code).to.eql(500);",
@@ -131,7 +255,8 @@
 									"",
 									"pm.test(\"Response time is less than 200ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);",
-									"});"
+									"});",
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -443,7 +568,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc1Mjg2MzI3NSwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3NTI3NzY4NzV9.tonB221Rut1U1hl2BTxLzyu4-iWLKOf8DlTIeUb207OyYGCcV-pRZHv35kz-PacQITjmwOzOy2in0GZHzgmtGw",
+						"value": "{{authToken}}",
 						"type": "string"
 					}
 				]
@@ -452,7 +577,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "10453c88-3836-4609-9ce9-2262c46154ab",
+						"id": "87de9937-267f-4a65-9c06-1b39defb6571",
 						"type": "text/javascript",
 						"packages": {},
 						"exec": [
@@ -463,7 +588,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "be02ca4d-cd82-4f52-b19b-ca62492fbc5f",
+						"id": "3cd44099-48bc-4122-95f2-25396673e74e",
 						"type": "text/javascript",
 						"packages": {},
 						"exec": [
@@ -479,7 +604,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc1Mjg2MzI3NSwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3NTI3NzY4NzV9.tonB221Rut1U1hl2BTxLzyu4-iWLKOf8DlTIeUb207OyYGCcV-pRZHv35kz-PacQITjmwOzOy2in0GZHzgmtGw",
+				"value": "{{authToken}}",
 				"type": "string"
 			}
 		]
@@ -488,7 +613,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "bc864b3a-4d48-4a89-8a00-2d3d097c7ca5",
+				"id": "757ecb88-b418-482e-ab2e-2484725b53e8",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -499,7 +624,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "72c9c75c-0377-4648-9749-96c96a81d556",
+				"id": "9358a718-3677-40ea-b806-478a5bb1039b",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -510,67 +635,67 @@
 	],
 	"variable": [
 		{
-			"id": "9d0fc089-36a9-4955-9013-0282776d109d",
+			"id": "51c98780-54eb-4262-bb2f-4aa1fab89289",
 			"key": "taskId",
 			"value": ""
 		},
 		{
-			"id": "a938bff6-0bd9-4dc9-864b-cb3a2511a7c2",
+			"id": "d594d718-dddb-4703-a431-b17ab5619d4a",
 			"key": "taskTitel",
 			"value": ""
 		},
 		{
-			"id": "d651c67b-0f35-4cab-b74f-3b144c4e6aa1",
+			"id": "9bee912a-2fa9-49df-bfcc-8c6cb08149d1",
 			"key": "taskText",
 			"value": ""
 		},
 		{
-			"id": "b8002e3d-cdfb-4b46-ad6b-1be2d289808e",
+			"id": "08a3116b-612d-44d5-a083-124282cd0dcc",
 			"key": "taskAnswer",
 			"value": ""
 		},
 		{
-			"id": "fb8bd98e-89da-426d-8926-4a3cb8fecbc5",
+			"id": "cc92fdd9-d622-42f9-9084-d7b657607be8",
 			"key": "titel",
 			"value": ""
 		},
 		{
-			"id": "7f4aa554-ed47-47a7-8096-6f22852885a1",
+			"id": "4d1d0622-f733-485e-9347-64812387be0f",
 			"key": "text",
 			"value": ""
 		},
 		{
-			"id": "5ef43323-2d26-43df-bc4b-3235926145b3",
+			"id": "ddc788c9-b1de-4cd4-b9fb-ab418e42b1f4",
 			"key": "answer",
 			"value": ""
 		},
 		{
-			"id": "2b4ccbcb-b780-4107-8d22-04a26050c42c",
+			"id": "74c48636-bb06-4e8d-b56c-152898cc6c67",
 			"key": "title",
 			"value": ""
 		},
 		{
-			"id": "b8f8ee9b-22c7-4d43-9704-0331842d53d0",
+			"id": "4abb9a8e-c881-4b50-8b62-4d3a6277eeda",
 			"key": "sadPathText500",
 			"value": ""
 		},
 		{
-			"id": "4ac9296a-6e8e-49c2-a49e-d281de3848ae",
+			"id": "4315e4ca-0dbb-42d6-a83f-aa72a870da0d",
 			"key": "sadPathAnswer500",
 			"value": ""
 		},
 		{
-			"id": "b68e036e-dcad-464e-916e-1f5faaf7bd8a",
+			"id": "24bdaf46-c107-4c65-9b13-fd439c0906a7",
 			"key": "sadPathText400",
 			"value": ""
 		},
 		{
-			"id": "cc0319eb-caf8-4fc5-88a4-417ae522911b",
+			"id": "42d5cd57-93b1-4748-a316-086b12aca24d",
 			"key": "sadPathAnswer400",
 			"value": ""
 		},
 		{
-			"id": "7d4d6095-23ce-419c-aba4-41d38e7fe3eb",
+			"id": "512573c6-1d7a-4586-8386-b0564ca3abdd",
 			"key": "sadPathTitle400",
 			"value": ""
 		}
